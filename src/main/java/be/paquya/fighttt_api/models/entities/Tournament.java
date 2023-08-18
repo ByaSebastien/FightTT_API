@@ -3,13 +3,13 @@ package be.paquya.fighttt_api.models.entities;
 import be.paquya.fighttt_api.models.enums.Rules;
 import be.paquya.fighttt_api.models.enums.Status;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
+@NoArgsConstructor @AllArgsConstructor @Builder @ToString @EqualsAndHashCode
 public class Tournament implements Serializable {
 
     @Getter
