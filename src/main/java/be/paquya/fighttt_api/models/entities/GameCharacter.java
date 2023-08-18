@@ -4,18 +4,17 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor @AllArgsConstructor @Builder @ToString @EqualsAndHashCode
-public class TournamentRegistration implements Serializable {
+public class GameCharacter implements Serializable {
 
     @Getter
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "REGISTRATION_ID")
+    @Column(name = "CHARACTER_ID")
     private Integer id;
 
     @Getter @Setter
-    @Column(name = "REGISTRATION_DATE",nullable = false) @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime registrationDate;
+    @Column(nullable = false)
+    private String name;
 }
