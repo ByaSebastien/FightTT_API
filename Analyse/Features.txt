@@ -1,0 +1,35 @@
+Member/Auth :
+    - Se connecter
+    - Inscrire les joueurs
+    - Modifier les joueurs (Rôle)
+    - Supprimer les joueurs
+    - Recuperer les joueurs
+    - Recuperer un joueur detail
+
+Tournament :
+    - Creer un tournois
+    - Modifier un tournois
+    - Supprimer un tournois
+    - Recuperer les tournois (Pagination,filtre)
+    - Recuperer un tournois detail
+    - Demarrer les tournois
+    - Passer a la ronde suivante (Bracket?)
+    - Dupliquer ?
+
+Match :
+    - Donner le resulat
+    - Modifier le resultat ?
+    - Recuperer des match (filtre)(historique joueur/tournois)
+
+Game :
+    - Ajouter un jeu
+    - Modifier un jeu
+    - Supprimer un jeu
+    - Recuperer la liste des jeux (filtre)
+
+Personnage :
+    - Ajouter un Personnage
+    - Modifier un Personnage
+    - Supprimer un Personnage
+    - Recuperer les personnages d'un jeu
+    

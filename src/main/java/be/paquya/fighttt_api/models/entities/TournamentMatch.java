@@ -4,6 +4,8 @@ import be.paquya.fighttt_api.models.enums.Result;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 @Entity
 @NoArgsConstructor @AllArgsConstructor @Builder @ToString @EqualsAndHashCode
 
@@ -24,4 +26,10 @@ public class TournamentMatch {
     @Getter @Setter
     @Column(name = "MATCH_RESULT", nullable = true) @Enumerated(EnumType.STRING)
     private Result result;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Tournament tournament;
+
+    @OneToMany(mappedBy = "match")
+    private Set<MatchParticipation> participations;
 }

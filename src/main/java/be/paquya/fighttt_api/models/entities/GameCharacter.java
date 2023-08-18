@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor @AllArgsConstructor @Builder @ToString @EqualsAndHashCode
@@ -17,4 +18,14 @@ public class GameCharacter implements Serializable {
     @Getter @Setter
     @Column(nullable = false)
     private String name;
+
+    @Getter @Setter
+    @Column(nullable = false,unique = true,length = 100)
+    private String image;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Game game;
+
+    @OneToMany(mappedBy = "character")
+    private Set<MatchParticipation> participations;
 }

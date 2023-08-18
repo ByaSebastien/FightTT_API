@@ -3,6 +3,8 @@ package be.paquya.fighttt_api.models.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 @Entity
 @NoArgsConstructor @AllArgsConstructor @Builder @ToString @EqualsAndHashCode
 
@@ -15,4 +17,7 @@ public class Game {
     @Getter @Setter
     @Column(nullable = false, unique = true, length = 100)
     private String name;
+
+    @OneToMany(mappedBy = "game",fetch = FetchType.LAZY)
+    private Set<GameCharacter> characters;
 }

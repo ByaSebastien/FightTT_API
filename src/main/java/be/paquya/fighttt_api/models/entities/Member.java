@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
 
 @NoArgsConstructor @AllArgsConstructor @Builder
 @Entity
@@ -46,5 +47,12 @@ public class Member implements Serializable {
     @Column(name = "IS_DELETED",nullable = false)
     private boolean isDeleted = false;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles;
 
+    @OneToMany(mappedBy = "member",fetch = FetchType.LAZY)
+    private Set<TournamentRegistration> registrations;
+
+    @OneToMany(mappedBy = "member")
+    private Set<MatchParticipation> participations;
 }

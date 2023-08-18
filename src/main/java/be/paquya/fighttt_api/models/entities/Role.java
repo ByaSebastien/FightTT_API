@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor @AllArgsConstructor @Builder @ToString @EqualsAndHashCode
@@ -21,4 +22,7 @@ public class Role implements Serializable {
     @Getter @Setter
     @Column(nullable = true)
     private String Description;
+
+    @ManyToMany(mappedBy = "roles")
+    private Set<Member> members;
 }

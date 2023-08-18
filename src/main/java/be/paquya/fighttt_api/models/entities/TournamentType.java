@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor @AllArgsConstructor @Builder @ToString @EqualsAndHashCode
@@ -22,4 +23,7 @@ public class TournamentType implements Serializable {
     @Getter @Setter
     @Column(nullable = true, name = "DESCRIPTION")
     private String description;
+
+    @OneToMany(mappedBy = "type",fetch = FetchType.LAZY)
+    private Set<Tournament> tournaments;
 }

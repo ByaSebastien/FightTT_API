@@ -18,4 +18,10 @@ public class TournamentRegistration implements Serializable {
     @Getter @Setter
     @Column(name = "REGISTRATION_DATE",nullable = false) @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime registrationDate;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Member member;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Tournament tournament;
 }

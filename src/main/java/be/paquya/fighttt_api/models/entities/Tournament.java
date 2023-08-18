@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor @AllArgsConstructor @Builder @ToString @EqualsAndHashCode
@@ -60,4 +61,16 @@ public class Tournament implements Serializable {
     @Getter @Setter
     @Column(nullable = false) @Enumerated(EnumType.STRING)
     private Rules rules;
+
+    @OneToMany(mappedBy = "tournament",fetch = FetchType.LAZY)
+    private Set<TournamentRegistration> registrations;
+
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
+    private TournamentType type;
+
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
+    private Game game;
+
+    @OneToMany(mappedBy = "tournament",fetch = FetchType.LAZY)
+    private Set<TournamentMatch> matches;
 }
