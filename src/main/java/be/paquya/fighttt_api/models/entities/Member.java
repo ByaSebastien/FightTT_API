@@ -23,7 +23,7 @@ public class Member implements Serializable, UserDetails {
     private Integer id;
 
     @Getter @Setter
-    @Column(nullable = false,length = 50)
+    @Column(nullable = false,length = 50,unique = true)
     private String username;
 
     @Getter @Setter
@@ -133,6 +133,6 @@ public class Member implements Serializable, UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return !isDeleted;
+        return !this.isDeleted;
     }
 }

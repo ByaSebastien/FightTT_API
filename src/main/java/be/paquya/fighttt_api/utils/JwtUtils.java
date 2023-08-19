@@ -30,7 +30,7 @@ public class JwtUtils {
         return builder
                 .claim("id",member.getId())
                 .claim("username",member.getUsername())
-                .claim("role",member.getRoles())
+                .claim("roles",member.getRoles())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + config.expireAt * 1000L))
                 .compact();
@@ -40,8 +40,8 @@ public class JwtUtils {
         return parser.parseClaimsJws(token).getBody();
     }
 
-    public Long getId(String token){
-        return getClaims(token).get("id", Long.class);
+    public Integer getId(String token){
+        return getClaims(token).get("id", Integer.class);
     }
 
     public String getUsername(String token){

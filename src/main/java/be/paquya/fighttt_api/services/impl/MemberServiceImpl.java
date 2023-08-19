@@ -48,7 +48,7 @@ public class MemberServiceImpl implements MemberService, UserDetailsService {
         }
         Member member = memberRegisterForm.toEntity();
         member.setPassword(bCryptUtils.hash(member.getPassword()));
-        member.addRole(new Role("member"));
+//        member.addRole(new Role("member"));
         Member newMember = memberRepository.save(member);
         String token = jwtUtils.generateToken(newMember);
         MemberSessionDTO memberSessionDTO = MemberSessionDTO.fromEntity(newMember);

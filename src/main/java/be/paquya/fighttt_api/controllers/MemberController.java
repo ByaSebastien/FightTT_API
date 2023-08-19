@@ -8,9 +8,11 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping(path = "/api")
 public class MemberController {
 
     private final MemberService memberService;
@@ -24,7 +26,7 @@ public class MemberController {
             @Valid
             @RequestBody MemberRegisterForm register
     ){
-        return null;
+        return ResponseEntity.ok(memberService.register(register));
     }
 
     @PostMapping(path = "/login")
@@ -32,6 +34,6 @@ public class MemberController {
             @Valid
             @RequestBody MemberLoginForm login
             ){
-        return null;
+        return ResponseEntity.ok(memberService.login(login));
     }
 }
