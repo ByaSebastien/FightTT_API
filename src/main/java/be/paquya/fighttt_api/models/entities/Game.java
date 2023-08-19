@@ -29,6 +29,10 @@ public class Game {
         this.characters = new HashSet<>();
     }
 
+    public Game(String name) {
+        this.name = name;
+    }
+
     public Set<Tournament> getTournaments(){
         return Set.copyOf(this.tournaments);
     }
