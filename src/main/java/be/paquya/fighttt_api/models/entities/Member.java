@@ -72,6 +72,8 @@ public class Member implements Serializable, UserDetails {
         this.gender = gender;
     }
 
+
+
     public Set<Role> getRoles(){
         return Set.copyOf(this.roles);
     }
