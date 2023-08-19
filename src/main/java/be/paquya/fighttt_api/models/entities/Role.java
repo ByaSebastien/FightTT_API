@@ -11,18 +11,13 @@ import java.util.Set;
 public class Role implements Serializable {
 
     @Getter
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    private Integer id;
-
-    @Getter @Setter
-    @Column(nullable = false,unique = true,length = 50)
+    @Id @Column(nullable = false,unique = true,length = 50)
     private String name;
-
-    @Getter @Setter
-    @Column(nullable = true)
-    private String Description;
 
     @ManyToMany(mappedBy = "roles")
     private Set<Member> members;
+
+    public Role(String name) {
+        this.name = name;
+    }
 }
