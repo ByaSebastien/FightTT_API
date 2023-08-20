@@ -5,7 +5,6 @@ import be.paquya.fighttt_api.models.entities.Role;
 import be.paquya.fighttt_api.models.enums.Gender;
 import be.paquya.fighttt_api.repositories.MemberRepository;
 import be.paquya.fighttt_api.repositories.RoleRepository;
-import jakarta.persistence.GeneratedValue;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
