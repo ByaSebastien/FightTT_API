@@ -62,6 +62,15 @@ public class DataInitializer implements CommandLineRunner {
                 Gender.HOMME);
         antoine.addRole(memberRole);
         memberRepository.save(antoine);
+
+        Member lucas = new Member(
+                "Pilkyo",
+                "lucas@test.be",
+                bCryptUtils.hash("test1234="),
+                LocalDate.of(1991,3,27),
+                Gender.HOMME);
+        antoine.addRole(memberRole);
+        memberRepository.save(lucas);
         //endregion
     }
 }
