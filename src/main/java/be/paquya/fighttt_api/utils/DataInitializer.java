@@ -37,11 +37,12 @@ public class DataInitializer implements CommandLineRunner {
         //region members
         Member admin = new Member(
                 "Admin",
-                "Admin@admin.be",
+                "admin@test.be",
                 bCryptUtils.hash("test1234="),
                 LocalDate.of(1991,3,27),
                 Gender.HOMME);
         admin.addRole(adminRole);
+        admin.addRole(memberRole);
         memberRepository.save(admin);
 
         Member seb = new Member(

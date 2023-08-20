@@ -24,6 +24,6 @@ public class MemberSessionDTO {
     }
 
     public static MemberSessionDTO fromEntity(Member m){
-        return new MemberSessionDTO(m.getId(),m.getPassword(),m.getRoles());
+        return new MemberSessionDTO(m.getId(),m.getUsername(),m.getRoles());
     }
 }
