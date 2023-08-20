@@ -6,13 +6,11 @@ import be.paquya.fighttt_api.models.forms.MemberRegisterForm;
 import be.paquya.fighttt_api.services.MemberService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/api")
+@CrossOrigin("*")
 public class AuthController {
 
     private final MemberService memberService;
