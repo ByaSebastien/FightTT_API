@@ -1,4 +1,4 @@
-package be.paquya.fighttt_api.models.forms;
+package be.paquya.fighttt_api.models.forms.member;
 
 import be.paquya.fighttt_api.models.entities.Member;
 import be.paquya.fighttt_api.models.entities.Role;

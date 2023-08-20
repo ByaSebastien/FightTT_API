@@ -1,10 +1,7 @@
-package be.paquya.fighttt_api.models.dtos;
+package be.paquya.fighttt_api.models.dtos.game;
 
 import be.paquya.fighttt_api.models.entities.Game;
-import be.paquya.fighttt_api.models.entities.Tournament;
 import lombok.*;
-
-import java.util.Set;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder @ToString @EqualsAndHashCode
 public class GameDTO {

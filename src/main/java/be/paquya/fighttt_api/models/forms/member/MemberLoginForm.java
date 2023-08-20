@@ -1,4 +1,4 @@
-package be.paquya.fighttt_api.models.forms;
+package be.paquya.fighttt_api.models.forms.member;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

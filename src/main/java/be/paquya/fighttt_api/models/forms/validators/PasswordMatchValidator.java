@@ -1,6 +1,6 @@
 package be.paquya.fighttt_api.models.forms.validators;
 
-import be.paquya.fighttt_api.models.forms.MemberRegisterForm;
+import be.paquya.fighttt_api.models.forms.member.MemberRegisterForm;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@AllArgsConstructor @Builder @ToString @EqualsAndHashCode
+@NoArgsConstructor @AllArgsConstructor @Builder @ToString
 public class Game {
     @Getter
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,16 +18,11 @@ public class Game {
     @Column(nullable = false, unique = true, length = 100)
     private String name;
 
-    @OneToMany(mappedBy = "game",fetch = FetchType.LAZY)
-    private Set<Tournament> tournaments;
+    @OneToMany(mappedBy = "game",fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private Set<Tournament> tournaments = new HashSet<>();
 
     @OneToMany(mappedBy = "game",fetch = FetchType.LAZY)
-    private Set<GameCharacter> characters;
-
-    public Game(){
-        this.tournaments = new HashSet<>();
-        this.characters = new HashSet<>();
-    }
+    private Set<GameCharacter> characters = new HashSet<>();
 
     public Game(String name) {
         this.name = name;

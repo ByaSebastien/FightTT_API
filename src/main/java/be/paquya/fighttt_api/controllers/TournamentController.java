@@ -1,10 +1,12 @@
 package be.paquya.fighttt_api.controllers;
 
-import be.paquya.fighttt_api.models.dtos.GameDTO;
-import be.paquya.fighttt_api.models.dtos.TournamentDTO;
-import be.paquya.fighttt_api.models.forms.GameForm;
-import be.paquya.fighttt_api.models.forms.TournamentForm;
+import be.paquya.fighttt_api.models.dtos.tournament.TournamentDetailDTO;
+import be.paquya.fighttt_api.models.dtos.tournament.TournamentSimpleDTO;
+import be.paquya.fighttt_api.models.entities.Tournament;
+import be.paquya.fighttt_api.models.forms.tournament.TournamentForm;
 import be.paquya.fighttt_api.services.TournamentService;
+import org.springframework.data.domain.Page;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,32 +22,49 @@ public class TournamentController {
     }
 
     @GetMapping(path = "{id}")
-    public ResponseEntity<TournamentDTO> getById(@PathVariable("id") Integer id){
-        TournamentDTO tournamentDTO = TournamentDTO.fromEntity(this.tournamentService.getById(id));
-        return ResponseEntity.ok(tournamentDTO);
+    public ResponseEntity<TournamentDetailDTO> getById(
+            @PathVariable("id") Integer id
+    ){
+        TournamentDetailDTO tournamentDetailDTO = TournamentDetailDTO.fromEntity(this.tournamentService.getById(id));
+        return ResponseEntity.ok(tournamentDetailDTO);
     }
 
     @GetMapping()
-    public ResponseEntity<List<TournamentDTO>> getAll() {
-        List<TournamentDTO> tournaments = this.tournamentService.getAll().stream().map(TournamentDTO::fromEntity).toList();
-        return ResponseEntity.ok(tournaments);
+    public ResponseEntity<List<TournamentSimpleDTO>> getAll(
+            @RequestParam(defaultValue = "0",required = false)
+            Integer page,
+            @RequestParam(defaultValue = "10",required = false)
+            Integer size
+    ) {
+        Page<Tournament> tournaments = this.tournamentService.getAll(page,size);
+        List<TournamentSimpleDTO> response = tournaments.stream()
+                .map(TournamentSimpleDTO::fromEntity)
+                .toList();
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping()
-    public ResponseEntity<TournamentDTO> create(TournamentForm tournamentForm){
-        TournamentDTO tournamentDTO = TournamentDTO.fromEntity(this.tournamentService.create(tournamentForm.toEntity()));
-        return ResponseEntity.ok(tournamentDTO);
+    public ResponseEntity<TournamentDetailDTO> create(
+            @RequestBody TournamentForm tournamentForm
+    ){
+        TournamentDetailDTO tournamentDetailDTO = TournamentDetailDTO.fromEntity(this.tournamentService.create(tournamentForm.toEntity()));
+        return ResponseEntity.ok(tournamentDetailDTO);
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<TournamentDTO> update(@PathVariable("id") Integer id, TournamentForm tournamentForm){
-        TournamentDTO tournamentDTO = TournamentDTO.fromEntity(this.tournamentService.update(tournamentForm.toEntity()));
-        return ResponseEntity.ok(tournamentDTO);
+    public ResponseEntity<TournamentDetailDTO> update(
+            @PathVariable("id") Integer id,
+            @RequestBody TournamentForm tournamentForm
+    ){
+        TournamentDetailDTO tournamentDetailDTO = TournamentDetailDTO.fromEntity(this.tournamentService.update(id,tournamentForm.toEntity()));
+        return ResponseEntity.ok(tournamentDetailDTO);
     }
 
     @DeleteMapping()
-    public ResponseEntity<Boolean> delete(@PathVariable("id") Integer id){
+    public ResponseEntity.BodyBuilder delete(
+            @PathVariable("id") Integer id
+    ){
         this.tournamentService.delete(id);
-        return ResponseEntity.ok(true);
+        return ResponseEntity.ok();
     }
 }

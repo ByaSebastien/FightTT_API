@@ -1,9 +1,11 @@
 package be.paquya.fighttt_api.controllers;
 
-import be.paquya.fighttt_api.models.dtos.MemberSessionDTO;
-import be.paquya.fighttt_api.models.forms.MemberLoginForm;
-import be.paquya.fighttt_api.models.forms.MemberRegisterForm;
+import be.paquya.fighttt_api.models.dtos.member.MemberSessionDTO;
+import be.paquya.fighttt_api.models.entities.Member;
+import be.paquya.fighttt_api.models.forms.member.MemberLoginForm;
+import be.paquya.fighttt_api.models.forms.member.MemberRegisterForm;
 import be.paquya.fighttt_api.services.MemberService;
+import be.paquya.fighttt_api.utils.JwtUtils;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +16,11 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final MemberService memberService;
+    private final JwtUtils jwtUtils;
 
-    public AuthController(MemberService memberService) {
+    public AuthController(MemberService memberService,JwtUtils jwtUtils) {
         this.memberService = memberService;
+        this.jwtUtils = jwtUtils;
     }
 
     @PostMapping(path = "/register")
@@ -24,7 +28,11 @@ public class AuthController {
             @Valid
             @RequestBody MemberRegisterForm register
     ){
-        return ResponseEntity.ok(memberService.register(register));
+        Member member = memberService.register(register);
+        String token = jwtUtils.generateToken(member);
+        MemberSessionDTO memberSessionDTO = MemberSessionDTO.fromEntity(member);
+        memberSessionDTO.setToken(token);
+        return ResponseEntity.ok(memberSessionDTO);
     }
 
     @PostMapping(path = "/login")
@@ -32,6 +40,10 @@ public class AuthController {
             @Valid
             @RequestBody MemberLoginForm login
             ){
-        return ResponseEntity.ok(memberService.login(login));
+        Member member = memberService.login(login);
+        String token = jwtUtils.generateToken(member);
+        MemberSessionDTO memberSessionDTO = MemberSessionDTO.fromEntity(member);
+        memberSessionDTO.setToken(token);
+        return ResponseEntity.ok(memberSessionDTO);
     }
 }

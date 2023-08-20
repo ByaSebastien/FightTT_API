@@ -4,6 +4,9 @@ import be.paquya.fighttt_api.models.entities.Tournament;
 import be.paquya.fighttt_api.models.enums.Status;
 import be.paquya.fighttt_api.repositories.TournamentRepository;
 import be.paquya.fighttt_api.services.TournamentService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -20,12 +23,12 @@ public class TournamentServiceImpl implements TournamentService {
 
     @Override
     public Tournament getById(Integer id){
-        return this.tournamentRepository.findById(id).orElseThrow(RuntimeException::new);
+        return this.tournamentRepository.findById(id).orElseThrow();
     }
 
     @Override
-    public List<Tournament> getAll(){
-        return this.tournamentRepository.findAll();
+    public Page<Tournament> getAll(int page, int size){
+        return this.tournamentRepository.findAll(PageRequest.of(page,size));
     }
 
     @Override
@@ -43,8 +46,16 @@ public class TournamentServiceImpl implements TournamentService {
     }
 
     @Override
-    public Tournament update(Tournament tournament){
-        tournament.setUpdateDate(LocalDateTime.now());
+    public Tournament update(Integer id, Tournament tournament){
+        Tournament tournamentToChange = tournamentRepository.findById(id).orElseThrow();
+        tournamentToChange.setName(tournament.getName());
+        tournamentToChange.setLocation(tournament.getLocation());
+        tournamentToChange.setMinPlayers(tournament.getMinPlayers());
+        tournamentToChange.setMaxPlayers(tournament.getMaxPlayers());
+        tournamentToChange.setEndRegistration(tournament.getEndRegistration());
+        tournamentToChange.setStartDate(tournament.getStartDate());
+        tournamentToChange.setRules(tournament.getRules());
+        tournamentToChange.setUpdateDate(LocalDateTime.now());
         return this.tournamentRepository.save(tournament);
     }
 

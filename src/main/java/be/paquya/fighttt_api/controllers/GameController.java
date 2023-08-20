@@ -1,7 +1,7 @@
 package be.paquya.fighttt_api.controllers;
 
-import be.paquya.fighttt_api.models.dtos.GameDTO;
-import be.paquya.fighttt_api.models.forms.GameForm;
+import be.paquya.fighttt_api.models.dtos.game.GameDTO;
+import be.paquya.fighttt_api.models.forms.game.GameForm;
 import be.paquya.fighttt_api.services.GameService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

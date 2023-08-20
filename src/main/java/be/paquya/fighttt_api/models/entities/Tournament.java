@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
-@NoArgsConstructor @AllArgsConstructor @Builder @ToString @EqualsAndHashCode
+@NoArgsConstructor @AllArgsConstructor @Builder @ToString
 public class Tournament implements Serializable {
 
     @Getter
@@ -47,7 +47,7 @@ public class Tournament implements Serializable {
     private LocalDateTime creationDate;
 
     @Getter @Setter
-    @Column(name = "UPDATE_DATE",nullable = false) @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "UPDATE_DATE",nullable = true) @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime updateDate;
 
     @Getter @Setter
@@ -68,9 +68,32 @@ public class Tournament implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
     private TournamentType type;
 
+    @Getter
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
     private Game game;
 
     @OneToMany(mappedBy = "tournament",fetch = FetchType.LAZY)
     private Set<TournamentMatch> matches;
+
+    public Tournament(
+            String name,
+            String location,
+            Integer minPlayers,
+            Integer maxPlayers,
+            LocalDateTime endRegistration,
+            LocalDateTime startDate,
+            Rules rules) {
+        this.name = name;
+        this.location = location;
+        this.minPlayers = minPlayers;
+        this.maxPlayers = maxPlayers;
+        this.endRegistration = endRegistration;
+        this.startDate = startDate;
+        this.rules = rules;
+    }
+
+    public void setGame(Game game){
+        this.game = game;
+        game.addTournament(this);
+    }
 }

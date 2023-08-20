@@ -1,4 +1,4 @@
-package be.paquya.fighttt_api.models.dtos;
+package be.paquya.fighttt_api.models.dtos.member;
 
 import be.paquya.fighttt_api.models.entities.Member;
 import be.paquya.fighttt_api.models.entities.Role;

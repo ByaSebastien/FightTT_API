@@ -1,4 +1,4 @@
-package be.paquya.fighttt_api.models.forms;
+package be.paquya.fighttt_api.models.forms.game;
 
 import be.paquya.fighttt_api.models.entities.Game;
 import jakarta.validation.constraints.NotBlank;

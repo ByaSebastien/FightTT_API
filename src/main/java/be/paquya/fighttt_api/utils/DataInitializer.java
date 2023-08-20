@@ -1,48 +1,61 @@
 package be.paquya.fighttt_api.utils;
 
+import be.paquya.fighttt_api.models.entities.Game;
 import be.paquya.fighttt_api.models.entities.Member;
 import be.paquya.fighttt_api.models.entities.Role;
+import be.paquya.fighttt_api.models.entities.Tournament;
 import be.paquya.fighttt_api.models.enums.Gender;
+import be.paquya.fighttt_api.models.enums.Rules;
+import be.paquya.fighttt_api.models.enums.Status;
+import be.paquya.fighttt_api.repositories.GameRepository;
 import be.paquya.fighttt_api.repositories.MemberRepository;
 import be.paquya.fighttt_api.repositories.RoleRepository;
+import be.paquya.fighttt_api.repositories.TournamentRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
 
-    private final MemberRepository memberRepository;
     private final RoleRepository roleRepository;
+    private final MemberRepository memberRepository;
+    private final GameRepository gameRepository;
+    private final TournamentRepository tournamentRepository;
     private final BCryptUtils bCryptUtils;
 
-    public DataInitializer(MemberRepository memberRepository,RoleRepository roleRepository,BCryptUtils bCryptUtils) {
-        this.memberRepository = memberRepository;
-        this.roleRepository = roleRepository;
+    public DataInitializer(
+            BCryptUtils bCryptUtils,
+            RoleRepository roleRepository,
+            MemberRepository memberRepository,
+            GameRepository gameRepository,
+            TournamentRepository tournamentRepository) {
         this.bCryptUtils = bCryptUtils;
+        this.roleRepository = roleRepository;
+        this.memberRepository = memberRepository;
+        this.gameRepository = gameRepository;
+        this.tournamentRepository = tournamentRepository;
     }
 
     @Override
     public void run(String... args) throws Exception {
         //region roles
-        Role adminRole = new Role("Admin");
-        roleRepository.save(adminRole);
 
+        Role adminRole = new Role("Admin");
         Role memberRole = new Role("Member");
-        roleRepository.save(memberRole);
+
         //endregion
 
         //region members
+
         Member admin = new Member(
                 "Admin",
                 "admin@test.be",
                 bCryptUtils.hash("test1234="),
                 LocalDate.of(1991,3,27),
                 Gender.HOMME);
-        admin.addRole(adminRole);
-        admin.addRole(memberRole);
-        memberRepository.save(admin);
 
         Member seb = new Member(
                 "Bambino",
@@ -50,8 +63,6 @@ public class DataInitializer implements CommandLineRunner {
                 bCryptUtils.hash("test1234="),
                 LocalDate.of(1991,3,27),
                 Gender.HOMME);
-        seb.addRole(memberRole);
-        memberRepository.save(seb);
 
         Member antoine = new Member(
                 "Never ban Shako",
@@ -59,8 +70,6 @@ public class DataInitializer implements CommandLineRunner {
                 bCryptUtils.hash("test1234="),
                 LocalDate.of(1991,3,27),
                 Gender.HOMME);
-        antoine.addRole(memberRole);
-        memberRepository.save(antoine);
 
         Member lucas = new Member(
                 "Pilkyo",
@@ -68,8 +77,45 @@ public class DataInitializer implements CommandLineRunner {
                 bCryptUtils.hash("test1234="),
                 LocalDate.of(1991,3,27),
                 Gender.HOMME);
-        antoine.addRole(memberRole);
-        memberRepository.save(lucas);
+
         //endregion
+
+        //region games
+
+        Game streetFighter = new Game("Street fighter");
+
+        //endregion
+
+        //region tournaments
+
+        Tournament tournament = new Tournament(
+                "Les null",
+                "Liège",
+                8,
+                16,
+                LocalDateTime.of(2023,12,12,12,00,00),
+                LocalDateTime.of(2024,1,1,12,00,00),
+                Rules.BO5
+        );
+        tournament.setCreationDate(LocalDateTime.now());
+        tournament.setStatus(Status.OPEN);
+
+        //endregion
+
+        admin.addRole(adminRole);
+        admin.addRole(memberRole);
+        seb.addRole(memberRole);
+        antoine.addRole(memberRole);
+        antoine.addRole(memberRole);
+        tournament.setGame(streetFighter);
+
+        roleRepository.save(adminRole);
+        roleRepository.save(memberRole);
+        memberRepository.save(admin);
+        memberRepository.save(seb);
+        memberRepository.save(antoine);
+        memberRepository.save(lucas);
+        gameRepository.save(streetFighter);
+        tournamentRepository.save(tournament);
     }
 }

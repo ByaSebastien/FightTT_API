@@ -1,15 +1,24 @@
-package be.paquya.fighttt_api.models.forms;
+package be.paquya.fighttt_api.models.forms.tournament;
 
 import be.paquya.fighttt_api.models.entities.Tournament;
+import be.paquya.fighttt_api.models.enums.Rules;
 import be.paquya.fighttt_api.models.enums.Status;
+import be.paquya.fighttt_api.models.forms.validators.NbPlayer;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+
+@NbPlayer
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder @ToString @EqualsAndHashCode
 public class TournamentForm {
     @NotBlank @Length(max = 100)
@@ -20,20 +29,25 @@ public class TournamentForm {
     private Integer minPlayers;
     @NotBlank @Range(min = 2)
     private Integer maxPlayers;
-    @NotBlank @DateTimeFormat(pattern="dd-MM-yyyy")
+    @NotNull @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime endRegistration;
-    @NotBlank @DateTimeFormat(pattern="dd-MM-yyyy")
+    @NotNull @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime startDate;
+    @NotNull @Enumerated(EnumType.STRING)
+    private Rules rules;
+    // todo GameDTO TournamentTypeDTO
+
 
     public Tournament toEntity(){
-        Tournament t = new Tournament();
-        t.setName(this.getName());
-        t.setLocation(this.getLocation());
-        t.setMinPlayers(this.getMinPlayers());
-        t.setMaxPlayers(this.getMaxPlayers());
-        t.setEndRegistration(this.getEndRegistration());
-        t.setStartDate(this.getStartDate());
 
-        return t;
+        return new Tournament(
+                this.name,
+                this.location,
+                this.minPlayers,
+                this.maxPlayers,
+                this.endRegistration,
+                this.startDate,
+                this.rules
+        );
     }
 }

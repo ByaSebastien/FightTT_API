@@ -1,14 +1,14 @@
 package be.paquya.fighttt_api.services;
 
-import be.paquya.fighttt_api.models.dtos.MemberSessionDTO;
-import be.paquya.fighttt_api.models.forms.MemberLoginForm;
-import be.paquya.fighttt_api.models.forms.MemberRegisterForm;
+import be.paquya.fighttt_api.models.entities.Member;
+import be.paquya.fighttt_api.models.forms.member.MemberLoginForm;
+import be.paquya.fighttt_api.models.forms.member.MemberRegisterForm;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface MemberService {
 
-    MemberSessionDTO login(MemberLoginForm memberLoginForm);
+    Member login(MemberLoginForm memberLoginForm);
 
-    MemberSessionDTO register(MemberRegisterForm memberRegisterForm);
+    Member register(MemberRegisterForm memberRegisterForm);
 }
