@@ -57,7 +57,7 @@ public class Member implements Serializable, UserDetails {
     )
     private Set<Role> roles;
 
-    @OneToMany(mappedBy = "member",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private Set<TournamentRegistration> registrations;
 
     @OneToMany(mappedBy = "member")

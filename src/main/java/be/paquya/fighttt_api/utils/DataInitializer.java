@@ -10,7 +10,6 @@ import be.paquya.fighttt_api.repositories.RoleRepository;
 import be.paquya.fighttt_api.repositories.TournamentRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
