@@ -9,7 +9,7 @@ public class MatchParticipation implements Serializable {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PARTICIPATION_ID")
-    private Integer id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Member member;

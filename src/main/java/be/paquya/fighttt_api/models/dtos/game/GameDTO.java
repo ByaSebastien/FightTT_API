@@ -5,7 +5,7 @@ import lombok.*;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder @ToString @EqualsAndHashCode
 public class GameDTO {
-    private Integer id;
+    private Long id;
     private String name;
 
     public static GameDTO fromEntity(Game game){

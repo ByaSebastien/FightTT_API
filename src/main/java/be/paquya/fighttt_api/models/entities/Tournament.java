@@ -7,16 +7,20 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@NoArgsConstructor @AllArgsConstructor @Builder @ToString
+@EqualsAndHashCode(of = {"id","name","location","minPlayers","maxPlayers","currentRound","rules"})
+@ToString(of = {"id","name","location","minPlayers","maxPlayers","currentRound","rules"})
+@AllArgsConstructor
+@Builder
 public class Tournament implements Serializable {
 
     @Getter
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TOURNAMENT_ID")
-    private Integer id;
+    private Long id;
 
     @Getter @Setter
     @Column(nullable = false,length = 100)
@@ -62,18 +66,24 @@ public class Tournament implements Serializable {
     @Column(nullable = false) @Enumerated(EnumType.STRING)
     private Rules rules;
 
-    @OneToMany(mappedBy = "tournament",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "tournament",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private Set<TournamentRegistration> registrations;
 
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
     private TournamentType type;
 
     @Getter
+    @JoinColumn(name = "GAME_ID")
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
     private Game game;
 
     @OneToMany(mappedBy = "tournament",fetch = FetchType.LAZY)
     private Set<TournamentMatch> matches;
+
+    public Tournament(){
+        this.registrations = new HashSet<>();
+        this.matches = new HashSet<>();
+    }
 
     public Tournament(
             String name,
@@ -83,6 +93,7 @@ public class Tournament implements Serializable {
             LocalDateTime endRegistration,
             LocalDateTime startDate,
             Rules rules) {
+        this();
         this.name = name;
         this.location = location;
         this.minPlayers = minPlayers;
@@ -95,5 +106,9 @@ public class Tournament implements Serializable {
     public void setGame(Game game){
         this.game = game;
         game.addTournament(this);
+    }
+
+    public void addRegistration(TournamentRegistration tournamentRegistration){
+        this.registrations.add(tournamentRegistration);
     }
 }

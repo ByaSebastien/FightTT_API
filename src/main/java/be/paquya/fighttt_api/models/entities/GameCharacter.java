@@ -7,13 +7,14 @@ import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-@NoArgsConstructor @AllArgsConstructor @Builder @ToString @EqualsAndHashCode
+@EqualsAndHashCode(of = {"id","name"}) @ToString(of = {"id","name"})
+@NoArgsConstructor @AllArgsConstructor @Builder
 public class GameCharacter implements Serializable {
 
     @Getter
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CHARACTER_ID")
-    private Integer id;
+    private Long id;
 
     @Getter @Setter
     @Column(nullable = false)

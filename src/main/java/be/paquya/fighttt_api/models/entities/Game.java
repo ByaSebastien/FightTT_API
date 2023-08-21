@@ -7,12 +7,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@NoArgsConstructor @AllArgsConstructor @Builder @ToString
+@EqualsAndHashCode(of = {"id","name"}) @ToString(of = {"id","name"})
+@NoArgsConstructor @AllArgsConstructor @Builder
 public class Game {
     @Getter
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="GAME_ID")
-    private Integer id;
+    private Long id;
 
     @Getter @Setter
     @Column(nullable = false, unique = true, length = 100)

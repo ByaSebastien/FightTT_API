@@ -24,7 +24,7 @@ public class GameController {
     }
 
     @GetMapping(path = "/id")
-    public ResponseEntity<GameDTO> getById(@PathVariable("id") Integer id){
+    public ResponseEntity<GameDTO> getById(@PathVariable("id") Long id){
         GameDTO gameDTO = GameDTO.fromEntity(this.gameService.getById(id));
         return ResponseEntity.ok(gameDTO);
     }
@@ -42,7 +42,7 @@ public class GameController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<GameDTO> update(@PathVariable("id") Integer id, GameForm gameForm){
+    public ResponseEntity<GameDTO> update(@PathVariable("id") Long id, GameForm gameForm){
         GameDTO gameDTO = GameDTO.fromEntity(this.gameService.update(id, gameForm.toEntity()));
         return ResponseEntity.ok(gameDTO);
     }

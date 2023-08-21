@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder @ToString @EqualsAndHashCode
 public class TournamentSimpleDTO {
-    private Integer id;
+    private Long id;
     private String name;
     private String location;
     private Status status;

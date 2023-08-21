@@ -1,9 +1,6 @@
 package be.paquya.fighttt_api.utils;
 
-import be.paquya.fighttt_api.models.entities.Game;
-import be.paquya.fighttt_api.models.entities.Member;
-import be.paquya.fighttt_api.models.entities.Role;
-import be.paquya.fighttt_api.models.entities.Tournament;
+import be.paquya.fighttt_api.models.entities.*;
 import be.paquya.fighttt_api.models.enums.Gender;
 import be.paquya.fighttt_api.models.enums.Rules;
 import be.paquya.fighttt_api.models.enums.Status;
@@ -11,7 +8,9 @@ import be.paquya.fighttt_api.repositories.GameRepository;
 import be.paquya.fighttt_api.repositories.MemberRepository;
 import be.paquya.fighttt_api.repositories.RoleRepository;
 import be.paquya.fighttt_api.repositories.TournamentRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -40,6 +39,7 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
         //region roles
 
@@ -102,6 +102,15 @@ public class DataInitializer implements CommandLineRunner {
 
         //endregion
 
+        //region tournament registration
+
+        TournamentRegistration registration = new TournamentRegistration();
+        registration.setMember(seb);
+        registration.setTournament(tournament);
+        registration.setRegistrationDate(LocalDateTime.now());
+
+        //endregion
+
         admin.addRole(adminRole);
         admin.addRole(memberRole);
         seb.addRole(memberRole);
@@ -117,5 +126,16 @@ public class DataInitializer implements CommandLineRunner {
         memberRepository.save(lucas);
         gameRepository.save(streetFighter);
         tournamentRepository.save(tournament);
+        tournament.addRegistration(registration);
+        tournamentRepository.save(tournament);
+        seb.addRegistration(registration);
+        tournament.addRegistration(registration);
+        memberRepository.save(seb);
+        tournamentRepository.save(tournament);
+
+        Member m = memberRepository.findById(2L).orElseThrow();
+        TournamentRegistration r = m.getRegistrations().stream().findFirst().orElseThrow();
+        Tournament t = r.getTournament();
+        Game g = t.getGame();
     }
 }

@@ -22,7 +22,7 @@ public class TournamentServiceImpl implements TournamentService {
     }
 
     @Override
-    public Tournament getById(Integer id){
+    public Tournament getById(Long id){
         return this.tournamentRepository.findById(id).orElseThrow();
     }
 
@@ -32,7 +32,7 @@ public class TournamentServiceImpl implements TournamentService {
     }
 
     @Override
-    public void delete(Integer id){
+    public void delete(Long id){
         Tournament tournament = this.getById(id);
         this.tournamentRepository.delete(tournament);
     }
@@ -46,7 +46,7 @@ public class TournamentServiceImpl implements TournamentService {
     }
 
     @Override
-    public Tournament update(Integer id, Tournament tournament){
+    public Tournament update(Long id, Tournament tournament){
         Tournament tournamentToChange = tournamentRepository.findById(id).orElseThrow();
         tournamentToChange.setName(tournament.getName());
         tournamentToChange.setLocation(tournament.getLocation());

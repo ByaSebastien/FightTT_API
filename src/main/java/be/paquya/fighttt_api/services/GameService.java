@@ -8,9 +8,9 @@ import java.util.Optional;
 
 @Service
 public interface GameService {
-    public Game getById(Integer Id);
+    public Game getById(Long Id);
     public Game getGameByName(String name);
     public List<Game> getAll();
     public Game create(Game game);
-    public Game update(Integer id, Game game);
+    public Game update(Long id, Game game);
 }

@@ -9,7 +9,7 @@ import java.util.Set;
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder @ToString @EqualsAndHashCode
 public class MemberSessionDTO {
 
-    private Integer id;
+    private Long id;
 
     private String username;
 
@@ -17,7 +17,7 @@ public class MemberSessionDTO {
 
     private String token;
 
-    public MemberSessionDTO(Integer id, String username, Set<Role> roles) {
+    public MemberSessionDTO(Long id, String username, Set<Role> roles) {
         this.id = id;
         this.username = username;
         this.roles = roles;

@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface TournamentService {
-    public Tournament getById(Integer id);
+    public Tournament getById(Long id);
     public Page<Tournament> getAll(int page, int size);
-    public void delete(Integer id);
+    public void delete(Long id);
     public Tournament create(Tournament tournament);
-    public Tournament update(Integer id,Tournament tournament);
+    public Tournament update(Long id,Tournament tournament);
 }

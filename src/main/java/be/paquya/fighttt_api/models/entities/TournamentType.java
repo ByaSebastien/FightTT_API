@@ -8,13 +8,14 @@ import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-@NoArgsConstructor @AllArgsConstructor @Builder @ToString @EqualsAndHashCode
-
+@EqualsAndHashCode(of = {"id","name"})
+@ToString(of = {"id","name"})
+@NoArgsConstructor @AllArgsConstructor @Builder
 public class TournamentType implements Serializable {
     @Getter
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TYPE_ID")
-    private Integer id;
+    private Long id;
 
     @Getter @Setter
     @Column(nullable = false, unique = true, name = "NAME", length = 50)

@@ -7,13 +7,14 @@ import lombok.*;
 import java.util.Set;
 
 @Entity
-@NoArgsConstructor @AllArgsConstructor @Builder @ToString @EqualsAndHashCode
-
+@EqualsAndHashCode(of = {"id","playerOneScore","playerTwoScore","result"})
+@ToString(of = {"id","playerOneScore","playerTwoScore","result"})
+@NoArgsConstructor @AllArgsConstructor @Builder
 public class TournamentMatch {
     @Getter
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MATCH_ID")
-    private Integer id;
+    private Long id;
 
     @Getter @Setter
     @Column(name = "PLAYER1_SCORE", nullable = true)

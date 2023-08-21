@@ -6,22 +6,27 @@ import lombok.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Entity
-@NoArgsConstructor @AllArgsConstructor @Builder @ToString @EqualsAndHashCode
+@Entity @Table(name = "TOURNAMENT_REGISTRATION")
+@EqualsAndHashCode(of = {"id","registrationDate"})
+@ToString(of = {"id","registrationDate"})
 public class TournamentRegistration implements Serializable {
 
-    @Getter
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "REGISTRATION_ID")
-    private Integer id;
+    @EmbeddedId
+    private TournamentRegistrationId id;
+
+    @Getter @Setter
+    @ManyToOne(fetch = FetchType.EAGER) @JoinColumn(name = "MEMBER_ID") @MapsId("memberId")
+    private Member member;
+
+    @Getter @Setter
+    @ManyToOne(fetch = FetchType.EAGER) @JoinColumn(name = "TOURNAMENT_ID") @MapsId("tournamentId")
+    private Tournament tournament;
 
     @Getter @Setter
     @Column(name = "REGISTRATION_DATE",nullable = false) @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime registrationDate;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Member member;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Tournament tournament;
+    public TournamentRegistration(){
+        this.id = new TournamentRegistrationId();
+    }
 }

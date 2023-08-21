@@ -41,10 +41,10 @@ public class MemberServiceImpl implements MemberService, UserDetailsService {
             throw new RuntimeException();
         }
         Member member = memberRegisterForm.toEntity();
-        member.setPassword(bCryptUtils.hash(member.getPassword()));
+        String hashedPassword = bCryptUtils.hash(member.getPassword());
+        member.setPassword(hashedPassword);
         member.addRole(new Role("Member"));
-        Member newMember = memberRepository.save(member);
-        return newMember;
+        return memberRepository.save(member);
     }
 
     @Override

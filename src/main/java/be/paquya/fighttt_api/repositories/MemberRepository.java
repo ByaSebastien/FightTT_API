@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface MemberRepository extends JpaRepository<Member,Integer> {
+public interface MemberRepository extends JpaRepository<Member,Long> {
 
     public Optional<Member> getMemberByUsername(String username);
     public Optional<Member> getMemberByEmail(String email);

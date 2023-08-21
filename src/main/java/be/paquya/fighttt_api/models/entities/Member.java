@@ -13,14 +13,15 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-@AllArgsConstructor @Builder
 @Entity
+@EqualsAndHashCode(of = {"id","username","email","birthdate","gender"})
+@ToString(of = {"id","username","email","birthdate","gender","roles"})
 public class Member implements Serializable, UserDetails {
 
     @Getter
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MEMBER_ID")
-    private Integer id;
+    private Long id;
 
     @Getter @Setter
     @Column(nullable = false,length = 50,unique = true)
@@ -49,9 +50,14 @@ public class Member implements Serializable, UserDetails {
     private boolean isDeleted = false;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "MEMBER_ROLE",
+            joinColumns = @JoinColumn(name = "MEMBER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "ROLE_ID")
+    )
     private Set<Role> roles;
 
-    @OneToMany(mappedBy = "member",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "member",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private Set<TournamentRegistration> registrations;
 
     @OneToMany(mappedBy = "member")
@@ -63,7 +69,12 @@ public class Member implements Serializable, UserDetails {
         this.roles = new HashSet<>();
     }
 
-    public Member(String username, String email, String password, LocalDate birthdate, Gender gender) {
+    public Member(
+            String username,
+            String email,
+            String password,
+            LocalDate birthdate,
+            Gender gender) {
         this();
         this.username = username;
         this.email = email;
@@ -72,10 +83,21 @@ public class Member implements Serializable, UserDetails {
         this.gender = gender;
     }
 
-
+    public Member(
+            Long id,
+            String username,
+            String email,
+            String password,
+            LocalDate birthdate,
+            Gender gender,
+            Set<Role> roles) {
+        this(username, email, password, birthdate, gender);
+        this.id = id;
+        this.roles = roles;
+    }
 
     public Set<Role> getRoles(){
-        return Set.copyOf(this.roles);
+        return Set.copyOf(this.roles.stream().map(Role::copyOf).toList());
     }
 
     public void addRole(Role role){
@@ -108,6 +130,18 @@ public class Member implements Serializable, UserDetails {
 
     public void deleteParticipation(MatchParticipation participation){
         this.participations.remove(participation);
+    }
+
+    public static Member copyOf(Member member){
+        return new Member(
+                member.getId(),
+                member.getUsername(),
+                member.getEmail(),
+                member.getPassword(),
+                member.getBirthdate(),
+                member.getGender(),
+                member.getRoles()
+        );
     }
 
     @Override

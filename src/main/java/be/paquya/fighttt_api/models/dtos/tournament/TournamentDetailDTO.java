@@ -8,7 +8,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder @ToString @EqualsAndHashCode
 public class TournamentDetailDTO {
-    private Integer id;
+    private Long id;
     private String name;
     private String location;
     private Integer minPlayers;

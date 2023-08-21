@@ -23,7 +23,7 @@ public class TournamentController {
 
     @GetMapping(path = "{id}")
     public ResponseEntity<TournamentDetailDTO> getById(
-            @PathVariable("id") Integer id
+            @PathVariable("id") Long id
     ){
         TournamentDetailDTO tournamentDetailDTO = TournamentDetailDTO.fromEntity(this.tournamentService.getById(id));
         return ResponseEntity.ok(tournamentDetailDTO);
@@ -53,7 +53,7 @@ public class TournamentController {
 
     @PutMapping(path = "/{id}")
     public ResponseEntity<TournamentDetailDTO> update(
-            @PathVariable("id") Integer id,
+            @PathVariable("id") Long id,
             @RequestBody TournamentForm tournamentForm
     ){
         TournamentDetailDTO tournamentDetailDTO = TournamentDetailDTO.fromEntity(this.tournamentService.update(id,tournamentForm.toEntity()));
@@ -62,7 +62,7 @@ public class TournamentController {
 
     @DeleteMapping()
     public ResponseEntity.BodyBuilder delete(
-            @PathVariable("id") Integer id
+            @PathVariable("id") Long id
     ){
         this.tournamentService.delete(id);
         return ResponseEntity.ok();

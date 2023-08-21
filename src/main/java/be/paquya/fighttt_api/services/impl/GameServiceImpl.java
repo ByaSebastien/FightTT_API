@@ -17,7 +17,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Game getById(Integer id) {
+    public Game getById(Long id) {
         //TODO créer exception
         return this.gameRepository.findById(id).orElseThrow(RuntimeException::new);
     }
@@ -39,7 +39,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Game update(Integer id, Game g) {
+    public Game update(Long id, Game g) {
         Game game = this.getById(id);
         game.setName(g.getName());
 
