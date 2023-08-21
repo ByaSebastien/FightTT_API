@@ -4,6 +4,7 @@ import be.paquya.fighttt_api.models.dtos.game.GameDTO;
 import be.paquya.fighttt_api.models.forms.game.GameForm;
 import be.paquya.fighttt_api.services.GameService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class GameController {
         return ResponseEntity.ok(gameDTO);
     }
 
+    @PreAuthorize("hasRole('Admin') and hasRole('')")
     @GetMapping()
     public ResponseEntity<List<GameDTO>> getAll() {
         List<GameDTO> games = this.gameService.getAll().stream().map(GameDTO::fromEntity).toList();

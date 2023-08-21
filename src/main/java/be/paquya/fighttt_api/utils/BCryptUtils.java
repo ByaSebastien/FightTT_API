@@ -1,14 +1,15 @@
 package be.paquya.fighttt_api.utils;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
 public class BCryptUtils {
 
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    public BCryptUtils(BCryptPasswordEncoder passwordEncoder) {
+    public BCryptUtils(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
 

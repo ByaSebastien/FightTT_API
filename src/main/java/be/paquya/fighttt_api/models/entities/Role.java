@@ -16,28 +16,28 @@ public class Role implements Serializable {
     @Id @Column(nullable = false,unique = true,length = 50)
     private String name;
 
-//    @ManyToMany(mappedBy = "roles")
-//    private Set<Member> members;
+    @ManyToMany(mappedBy = "roles")
+    private Set<Member> members;
 
     public Role(){
-//        this.members = new HashSet<>();
+        this.members = new HashSet<>();
     }
     public Role(String name) {
         this();
         this.name = name;
     }
 
-//    public Set<Member> getMembers() {
-//        return members;
-//    }
-//
-//    public void addMember(Member member){
-//        this.members.add(member);
-//    }
-//
-//    public void deleteMember(Member member){
-//        this.members.remove(member);
-//    }
+    public Set<Member> getMembers() {
+        return members;
+    }
+
+    public void addMember(Member member){
+        this.members.add(member);
+    }
+
+    public void deleteMember(Member member){
+        this.members.remove(member);
+    }
 
     public static Role copyOf(Role role){
         return new Role(role.getName());

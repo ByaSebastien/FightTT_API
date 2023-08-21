@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @EqualsAndHashCode(of = {"id","name"}) @ToString(of = {"id","name"})
-@NoArgsConstructor @AllArgsConstructor @Builder
+@NoArgsConstructor @AllArgsConstructor
 public class Game {
     @Getter
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
